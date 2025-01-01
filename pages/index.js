@@ -1,24 +1,33 @@
 import Head from "next/head";
-import Image from "next/image";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import styles from "../styles/Home.module.css";
 import { AnimatePresence, motion } from "framer-motion";
 import Model from "../components/Model";
+
 export default function Home() {
   const router = useRouter();
   const [text, setText] = useState("");
 
   useEffect(() => {
     const handleInput = () => {
-      if (text === "whois") {
-        router.push({
-          pathname: "/about",
-        });
-      }
+      const handleKeyPress = (event) => {
+        if (event.key === "Enter" && text === "whois") {
+          router.push({
+            pathname: "/about",
+          });
+        }
+      };
+
+      document.addEventListener("keypress", handleKeyPress);
+
+      return () => {
+        document.removeEventListener("keypress", handleKeyPress);
+      };
     };
     handleInput();
   }, [router, text]);
+
   return (
     <div className={styles.container}>
       <Head>
@@ -50,7 +59,7 @@ export default function Home() {
                 }}
               >
                 <p>Hello! I am</p>
-                <h1>Kasim Shaikh</h1>
+                <h1>Asif Ibrahim</h1>
                 <h3>front-end developer</h3>
               </motion.div>
             </AnimatePresence>
@@ -73,7 +82,7 @@ export default function Home() {
                       },
                     },
                   }}
-                  // eslint-disable-next-line react/jsx-no-comment-textnodes
+                // eslint-disable-next-line react/jsx-no-comment-textnodes
                 >
                   //
                 </motion.p>
